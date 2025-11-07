@@ -3,6 +3,8 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\Mahasiswa;    // <-- IMPORT MODEL
+use App\Models\MataKuliah;  // <-- IMPORT MODEL
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Nilai>
@@ -17,13 +19,18 @@ class NilaiFactory extends Factory
     public function definition(): array
     {
         return [
-            'NIM' => function () {
-                return \App\Models\Mahasiswa::inRandomOrder()->first()->NIM;
-            },
+            // PERUBAHAN:
+            // Ini akan secara otomatis membuat Mahasiswa baru 
+            // dan mengambil NIM-nya untuk diisi di sini.
+            'NIM' => Mahasiswa::factory(), 
+
+            // Ini akan mengambil id_mk acak dari MataKuliah yang sudah ada
+            // (diasumsikan MataKuliahSeeder sudah berjalan)
             'id_mk' => function () {
-                return \App\Models\MataKuliah::inRandomOrder()->first()->id_mk;
+                return MataKuliah::inRandomOrder()->first()->id_mk;
             },
-            'nilai' => $this->faker->randomFloat(2, 0, 100),
+
+            'nilai' => $this->faker->randomFloat(2, 50, 100), // Nilai 50-100
             'berkas' => null,
         ];
     }

@@ -20,8 +20,8 @@
             <td>{{$mk->sks}}</td>
             <td>{{$mk->dosen->nama}}</td>
             <td>
-                <a href="/edit_matakuliah/{{ $mk->id_mk }}" class="btn btn-light btn-action">Edit</a>
-                <a href="/hapus_matakuliah/{{ $mk->id_mk }}" class="btn btn-light btn-action" onclick="return confirm('Are you sure?')">Hapus</a>
+                <a href="/edit_matakuliah/{{ $mk->id_mk }}" class="btn btn-success btn-action">Edit</a>
+                <a href="/hapus_matakuliah/{{ $mk->id_mk }}" class="btn btn-danger btn-action" onclick="return confirm('Are you sure?')">Hapus</a>
             </td>
         </tr>
     @endforeach

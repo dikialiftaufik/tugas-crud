@@ -7,6 +7,7 @@
 @section('table-headers')
     <th>Kode Prodi</th>
     <th>Nama Prodi</th>
+    <th>Fakultas</th>
     <th width="150">Action</th>
 @endsection
 
@@ -15,9 +16,10 @@
         <tr>
             <td>{{$p->id_prodi}}</td>
             <td>{{$p->nama_prodi}}</td>
+            <td>{{$p->fakultas}}</td>
             <td>
-                <a href="/edit_prodi/{{ $p->id_prodi }}" class="btn btn-light btn-action">Edit</a>
-                <a href="/hapus_prodi/{{ $p->id_prodi }}" class="btn btn-light btn-action">Hapus</a>
+                <a href="/edit_prodi/{{ $p->id_prodi }}" class="btn btn-success btn-action">Edit</a>
+                <a href="/hapus_prodi/{{ $p->id_prodi }}" class="btn btn-danger btn-action">Hapus</a>
             </td>
         </tr>
     @endforeach

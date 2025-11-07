@@ -23,8 +23,9 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call([
-            ProdiSeeder::class, // <-- PANGGIL SEEDER ANDA DI SINI
+            ProdiSeeder::class, 
             DosenSeeder::class,
+            MataKuliahSeeder::class, // <-- TAMBAHKAN LINE INI
             // Anda bisa tambahkan seeder lain di bawahnya
         ]);
     }

@@ -10,7 +10,9 @@ class MahasiswaController extends Controller
 {
     function index()
     {
-        $data_mhs = Mahasiswa::all();
+        // PERUBAHAN: Gunakan with('prodi') untuk Eager Loading
+        // Ini akan mengambil data relasi prodi secara efisien
+        $data_mhs = Mahasiswa::with('prodi')->get();
         return view('mahasiswa', ['mhs' => $data_mhs]);
     }
 
@@ -63,5 +65,3 @@ class MahasiswaController extends Controller
         return redirect('/mahasiswa');
     }
 }
-
-

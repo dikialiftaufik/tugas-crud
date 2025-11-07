@@ -18,10 +18,13 @@
             <td>{{$x->NIM}}</td>
             <td>{{$x->nama}}</td>
             <td>{{$x->email}}</td>
-            <td>{{$x->id_prodi}}</td>
+            
+            {{-- PERUBAHAN: Tampilkan nama prodi dari relasi --}}
+            <td>{{ $x->prodi ? $x->prodi->nama_prodi : 'Prodi Tidak Ditemukan' }}</td>
+
             <td>
-                <a href="/edit_mhs/{{ $x->NIM }}" class="btn btn-light btn-action">Edit</a>
-                <a href="/hapus_mhs/{{ $x->NIM }}" class="btn btn-light btn-action">Hapus</a>
+                <a href="/edit_mhs/{{ $x->NIM }}" class="btn btn-success btn-action">Edit</a>
+                <a href="/hapus_mhs/{{ $x->NIM }}" class="btn btn-danger btn-action">Hapus</a>
             </td>
         </tr>
     @endforeach
