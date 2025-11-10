@@ -17,9 +17,7 @@ class Prodi extends Model
     ];
     public $timestamps = true;
 
-    /**
-     * Get the mahasiswa for this prodi.
-     */
+    
     public function mahasiswa()
     {
         return $this->hasMany(\App\Models\Mahasiswa::class, 'id_prodi', 'id_prodi');

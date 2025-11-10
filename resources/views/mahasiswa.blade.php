@@ -19,7 +19,6 @@
             <td>{{$x->nama}}</td>
             <td>{{$x->email}}</td>
             
-            {{-- PERUBAHAN: Tampilkan nama prodi dari relasi --}}
             <td>{{ $x->prodi ? $x->prodi->nama_prodi : 'Prodi Tidak Ditemukan' }}</td>
 
             <td>

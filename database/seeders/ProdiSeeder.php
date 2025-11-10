@@ -13,7 +13,6 @@ class ProdiSeeder extends Seeder
      */
     public function run(): void
     {
-        // Data berdasarkan https://smb.telkomuniversity.ac.id/program/ (Kampus Bandung)
 
         // Fakultas Teknik Elektro (FTE)
         Prodi::create(['nama_prodi' => 'S1 Teknik Telekomunikasi', 'fakultas' => 'Fakultas Teknik Elektro']);
