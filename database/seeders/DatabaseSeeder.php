@@ -25,8 +25,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             ProdiSeeder::class, 
             DosenSeeder::class,
-            MataKuliahSeeder::class, // <-- TAMBAHKAN LINE INI
-            // Anda bisa tambahkan seeder lain di bawahnya
+            MataKuliahSeeder::class, 
+            FakultasSeeder::class, 
         ]);
     }
 }
