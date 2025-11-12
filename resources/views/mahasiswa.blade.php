@@ -23,6 +23,8 @@
             <td>{{ $x->prodi ? $x->prodi->nama_prodi : 'Prodi Tidak Ditemukan' }}</td>
             <td><img src="/images/{{ $x->foto }}" width="100"></td>
 
+            
+
             <td>
                 <a href="/edit_mhs/{{ $x->NIM }}" class="btn btn-success btn-action">Edit</a>
                 <a href="/hapus_mhs/{{ $x->NIM }}" class="btn btn-danger btn-action">Hapus</a>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Mahasiswa;
 use App\Models\Prodi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 
 class MahasiswaController extends Controller
@@ -48,6 +49,14 @@ class MahasiswaController extends Controller
     function hapus($NIM)
     {
         $data_mhs = Mahasiswa::find($NIM);
+
+        if ($data_mhs->foto) {
+            $path = public_path('/images/' . $data_mhs->foto);
+            if (File::exists($path)) {
+                File::delete($path);
+            }
+        }
+
         $data_mhs->delete();
 
         return redirect('/mahasiswa');
@@ -62,12 +71,32 @@ class MahasiswaController extends Controller
 
     function update(request $a)
     {
+
+        $mhs = Mahasiswa::findOrFail($a->nim);
+
+        if ($a->hasFile('foto')) {
+            if ($mhs->foto) {
+                $oldPath = public_path('/images/' . $mhs->foto);
+            if (File::exists($oldPath)) {
+                File::delete($oldPath);
+            }
+        }
+
+
+        $file = $a->file('foto');
+        $namaFile = time() . ' _ ' . $file->getClientOriginalName();
+        $file->move(public_path('images'), $namaFile);
+        }else{
+            $namaFile = $mhs->foto;
+        }
+
         Mahasiswa::where('NIM', $a->nim)->update(
             [
                 'NIM' => $a->nim,
                 'nama' => $a->nama,
                 'email' => $a->email,
-                'id_prodi' => $a->prodi
+                'id_prodi' => $a->prodi,
+                'foto' => $namaFile
             ]
         );
         return redirect('/mahasiswa');
