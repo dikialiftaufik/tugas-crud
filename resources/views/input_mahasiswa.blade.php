@@ -7,7 +7,7 @@
     <h1>Input Data Mahasiswa</h1>
     <div class="card">
         <div class="card-body">
-            <form action="{{ url('simpan_mhs') }}" method="POST">
+            <form action="{{ url('simpan_mhs') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <div class="mb-3">
@@ -33,6 +33,11 @@
                             <option value="{{ $prodi->id_prodi }}">{{ $prodi->nama_prodi }}</option>
                         @endforeach
                     </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="foto" class="form-label">Foto</label>
+                    <input type="file" name="foto" id="foto" class="form-control" required>
                 </div>
 
                 <div class="d-grid gap-2">

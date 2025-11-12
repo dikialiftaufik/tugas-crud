@@ -23,12 +23,23 @@ class MahasiswaController extends Controller
 
     function simpan(Request $x)
     {
+
+        $namaFile = null;
+
+        // proses upload foto
+        if ($x->hasFile('foto')) {
+            $file = $x->file('foto'); // cara nangkap inputan berupa file
+            $namaFile = time() . ' _ ' . $file->getClientOriginalName();
+            $file->move(public_path('images'), $namaFile); // file diupload ke folder images    
+        }
+
         Mahasiswa::create(
             [
                 'NIM' => $x->nim,
                 'nama' => $x->nama,
                 'email' => $x->email,
-                'id_prodi' => $x->prodi
+                'id_prodi' => $x->prodi,
+                'foto' => $namaFile
             ]
         );
         return redirect('/mahasiswa');

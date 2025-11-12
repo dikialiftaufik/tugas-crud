@@ -9,6 +9,7 @@
     <th>Nama</th>
     <th>Email</th>
     <th>Prodi</th>
+    <th>Foto</th>
     <th width="150">Action</th>
 @endsection
 
@@ -20,6 +21,7 @@
             <td>{{$x->email}}</td>
             
             <td>{{ $x->prodi ? $x->prodi->nama_prodi : 'Prodi Tidak Ditemukan' }}</td>
+            <td><img src="/images/{{ $x->foto }}" width="100"></td>
 
             <td>
                 <a href="/edit_mhs/{{ $x->NIM }}" class="btn btn-success btn-action">Edit</a>
