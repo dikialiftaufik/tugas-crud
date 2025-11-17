@@ -22,6 +22,11 @@
                     <input type="email" name="email" id="email" class="form-control" required>
                 </div>
 
+                <div class="mb-3">
+                    <label for="foto" class="form-label">Foto</label>
+                    <input type="file" name="foto" id="foto" class="form-control" required>
+                </div>
+
                 <div class="d-grid gap-2">
                     <button type="submit" class="btn btn-primary">Save</button>
                     <a href="/dosen" class="btn btn-secondary">Cancel</a>

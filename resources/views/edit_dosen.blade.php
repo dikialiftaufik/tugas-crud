@@ -22,9 +22,19 @@
                     <input type="email" name="email" id="email" class="form-control" value="{{ $data_dosen->email }}" required>
                 </div>
 
+                <div class="mb-3">
+                        <label for="foto" class="form-label">Foto</label>
+                        <input type="file" name="foto" id="foto" class="form-control">
+                    </div>
+
+                    @if ($data_dosen->foto)
+                        <p>Foto saat ini: </p>
+                        <img src="{{ asset('images/' . $data_dosen->foto) }}" width="120" alt="foto">
+                    @endif
+
                 <div class="d-grid gap-2">
                     <button type="submit" class="btn btn-primary">Update</button>
-                    <a href="/dosen" class="btn btn-secondary">Cancel</a>
+                    <a href="{{ url('/dosen') }}" class="btn btn-secondary">Cancel</a>
                 </div>
             </form>
         </div>
