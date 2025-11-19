@@ -5,6 +5,7 @@ use App\Http\Controllers\DosenController;
 use App\Http\Controllers\ProdiController;
 use App\Http\Controllers\MataKuliahController;
 use App\Http\Controllers\NilaiController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -12,7 +13,7 @@ Route::get('/', function () {
 });
 
 // Mahasiswa 
-Route::get('/mahasiswa', [MahasiswaController::class, 'index']);
+Route::get('/mahasiswa', [MahasiswaController::class, 'index'])->middleware('auth');
 Route::get('/input_mhs', [MahasiswaController::class, 'input']);
 Route::post('/simpan_mhs', [MahasiswaController::class, 'simpan']);
 Route::get('/edit_mhs/{NIM}', [MahasiswaController::class, 'edit']);
@@ -53,3 +54,7 @@ Route::post('/simpan_nilai', [NilaiController::class, 'simpan']);
 Route::get('/edit_nilai/{id}', [NilaiController::class, 'edit']);
 Route::post('/update_nilai/{id}', [NilaiController::class, 'update']);
 Route::get('/hapus_nilai/{id}', [NilaiController::class, 'hapus']);
+
+Route::get('/viewLogin', [AuthController::class, 'showLogin'])->name('login');
+Route::post('/login', [AuthController::class, 'login']);
+Route::get('/logout', [AuthController::class, 'logout']);
