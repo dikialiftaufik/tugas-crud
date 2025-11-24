@@ -4,6 +4,7 @@
 @section('page-title', 'Data Mahasiswa')
 @section('create-url', '/input_mhs')
 
+
 @section('table-headers')
     <th>NIM</th>
     <th>Nama</th>
@@ -14,6 +15,7 @@
 @endsection
 
 @section('table-rows')
+<a href="/logout">Logout</a>
     @foreach ($mhs as $x)
         <tr>
             <td>{{$x->NIM}}</td>
@@ -22,8 +24,6 @@
             
             <td>{{ $x->prodi ? $x->prodi->nama_prodi : 'Prodi Tidak Ditemukan' }}</td>
             <td><img src="/images/{{ $x->foto }}" width="100"></td>
-
-            
 
             <td>
                 <a href="/edit_mhs/{{ $x->NIM }}" class="btn btn-success btn-action">Edit</a>
