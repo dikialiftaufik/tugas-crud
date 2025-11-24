@@ -46,6 +46,16 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
+        // Mahasiswa
+        User::updateOrCreate(
+            ['email' => 'spranowo@example.com'],
+            [
+                'name' => 'Puji Zulaika Ismail',
+                'role' => 'Mahasiswa',
+                'password' => Hash::make('mahasiswa123'),
+            ]
+        );
+
         // $this->call([
         //     ProdiSeeder::class, 
         //     DosenSeeder::class,

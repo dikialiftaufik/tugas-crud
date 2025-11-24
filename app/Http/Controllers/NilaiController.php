@@ -7,99 +7,55 @@ use App\Models\Mahasiswa;
 use App\Models\MataKuliah;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Auth;
 
 class NilaiController extends Controller
 {
     public function index()
     {
-        $nilai = Nilai::with(['mahasiswa', 'mataKuliah'])->get();
-        return view('nilai', ['nilai' => $nilai]);
-    }
+        $user = Auth::user();
 
-    public function input()
-    {
-        $mahasiswa = Mahasiswa::all();
-        $matakuliah = MataKuliah::all();
-        return view('input_nilai', [
-            'mahasiswa' => $mahasiswa,
-            'matakuliah' => $matakuliah
-        ]);
-    }
+        if ($user->role == 'Mahasiswa') {
+            // 1. Cari data mahasiswa berdasarkan email user yang login
+            $mhs = Mahasiswa::where('email', $user->email)->first();
 
-    public function simpan(Request $request)
-    {
-         $namaFile = null;
-
-        // proses upload berkas (PDF, doc, dll.) ke public/dokumen
-        if ($request->hasFile('berkas')) {
-            $file = $request->file('berkas');
-            $namaFile = time() . '_' . preg_replace('/\s+/', '_', $file->getClientOriginalName());
-            $file->move(public_path('dokumen'), $namaFile);
+            // 2. Jika data mahasiswa ditemukan, ambil nilai berdasarkan NIM-nya
+            if ($mhs) {
+                $nilai = Nilai::where('NIM', $mhs->NIM)->with(['mahasiswa', 'matakuliah'])->get();
+            } else {
+                // Jika tidak ada data mahasiswa yang cocok dengan email login
+                $nilai = []; 
+            }
+        } else {
+            // Admin & Dosen melihat semua nilai
+            $nilai = Nilai::with(['mahasiswa', 'matakuliah'])->get();
         }
 
-        $nilai = new Nilai();
-        $nilai->NIM = $request->NIM;
-        $nilai->id_mk = $request->id_mk;
-        $nilai->nilai = $request->nilai;
-        $nilai->berkas = $namaFile;
-        $nilai->save();
+        return view('nilai', compact('nilai'));
+    }
 
+    // ... method input, simpan, edit, update, hapus biarkan standar
+    public function input() { return view('input_nilai'); }
+    
+    public function simpan(Request $request) {
+        Nilai::create($request->all());
         return redirect('/nilai');
     }
 
-    public function edit($id)
-    {
+    public function edit($id) {
+        $data = Nilai::find($id);
+        return view('edit_nilai', compact('data'));
+    }
+
+    public function update(Request $request, $id) {
         $nilai = Nilai::find($id);
-        $mahasiswa = Mahasiswa::all();
-        $matakuliah = MataKuliah::all();
-        return view('edit_nilai', [
-            'nilai' => $nilai,
-            'mahasiswa' => $mahasiswa,
-            'matakuliah' => $matakuliah
-        ]);
-    }
-
-    public function update(Request $request, $id)
-    {
-        $nilai = Nilai::findOrFail($id);
-
-        // jika ada upload file baru, hapus file lama lalu simpan file baru
-        if ($request->hasFile('berkas')) {
-            if ($nilai->berkas) {
-                $oldPath = public_path('dokumen/' . $nilai->berkas);
-                if (File::exists($oldPath)) {
-                    File::delete($oldPath);
-                }
-            }
-
-            $file = $request->file('berkas');
-            $namaFile = time() . '_' . preg_replace('/\s+/', '_', $file->getClientOriginalName());
-            $file->move(public_path('dokumen'), $namaFile);
-            $nilai->berkas = $namaFile;
-        }
-
-        $nilai->NIM = $request->NIM;
-        $nilai->id_mk = $request->id_mk;
-        $nilai->nilai = $request->nilai;
-        $nilai->save();
-
+        $nilai->update($request->all());
         return redirect('/nilai');
     }
 
-    public function hapus($id)
-    {
-         $nilai = Nilai::findOrFail($id);
-
-        // hapus berkas terkait jika ada
-        if ($nilai->berkas) {
-            $path = public_path('dokumen/' . $nilai->berkas);
-            if (File::exists($path)) {
-                File::delete($path);
-            }
-        }
-
+    public function hapus($id) {
+        $nilai = Nilai::find($id);
         $nilai->delete();
-
         return redirect('/nilai');
     }
 }

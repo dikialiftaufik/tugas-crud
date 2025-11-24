@@ -12,32 +12,29 @@ class AuthController extends Controller
         return view('login');
     }
 
-    public function login(Request $a)
+    public function login(Request $request)
     {
-        $data = $a->validate([
+        $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required'
         ]);
 
-        // untuk mengecek email dan password (hashed)
-        if(Auth::attempt($data, $a->boolean('remember')))
-        {
-            $a->session()->regenerate(); // mencegah session fixation
-            return redirect()->intended('/mahasiswa');
-        } else {
-            return back()->withErrors([
-                'email' => 'Email atau password salah.'
-            ])->onlyInput('email');
-
+        if (Auth::attempt($credentials, $request->boolean('remember'))) {
+            $request->session()->regenerate();
+            // UBAH DISINI: Redirect ke dashboard, bukan langsung ke mahasiswa
+            return redirect()->intended('/dashboard');
         }
+
+        return back()->withErrors([
+            'email' => 'Email atau password salah.',
+        ])->onlyInput('email');
     }
 
-    public function logout(Request $a)
+    public function logout(Request $request)
     {
         Auth::logout();
-
-        $a->session()->invalidate();
-        $a->session()->regenerateToken();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
         return redirect('/viewLogin');
     }
 }
